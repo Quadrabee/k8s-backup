@@ -1,0 +1,82 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: example-db-backup
+spec:
+  schedule: "0 0 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: backup
+            image: quadrabee/k8s-backup
+            env:
+              - name: BACKUP_UPLOAD
+                value: "true"
+              - name: BACKUP_UPLOAD_METHOD
+                value: "gs"
+              - name: BACKUP_UPLOAD_GS_KEY_FILE
+                value: "/etc/service-account-key.json"
+              - name: BACKUP_UPLOAD_GS_PATH
+                value: "gs://example-backups/db/"
+              - name: BACKUP_DB
+                value: "true"
+              - name: BACKUP_DB_DRIVER
+                value: mysql
+              - name: BACKUP_DB_HOST
+                value: mysql-0.mysql
+              - name: BACKUP_DB_USER
+                value: backup-user
+              - name: BACKUP_DB_PASSWORD
+                value: backup-password
+              - name: BACKUP_DB_DATABASE
+                value: dbname
+              - name: BACKUP_ENCRYPT
+                value: "true"
+              - name: BACKUP_ENCRYPT_RECIPIENT
+                value: backup@example.org
+              - name: BACKUP_ENCRYPT_KEY
+                value: |-
+                  -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+                  mQENBFrQtegBCACdxZ08xlunyy5ZpfBe/8RMNLUK8ocRX0bjQ2hTxn+P5Kr6B+QA
+                  NutcU5fgUZW68IymDLpVC6ZZnBuwuKELc5cuTwDZDgexE0brMe/wJLL6Y4sOMX7H
+                  b4GIQMxradvb5BftnQZBRuE0yzYUxmWPOk3gpStYV6uBSfoTzOTdBQ2nzgoQxEhe
+                  NU1oimpbd43fuNCdxclEB1HvGJ3IQhzycl0m7XuDhUTx+h/L7/M9w+pUKKsfHPgP
+                  Tn6tgnDhbSyl7awV/l0Lc4LpaDj9X7GwgRX+q3DxRJxvdRMPitnFIubL/JEMUtnW
+                  6Qdlb5rt9TXeHnaJMaycJUpXvLMy0ios0w0HABEBAAG0NEJhY2t1cCBFeGFtcGxl
+                  IChGb28gQmFyIGV0Yy4uLikgPGJhY2t1cEBleGFtcGxlLm9yZz6JAU4EEwEKADgW
+                  IQSMhGe62IWmn31iyyelhl5/2UF/cAUCWtC16AIbAwULCQgHAwUVCgkICwUWAgMB
+                  AAIeAQIXgAAKCRClhl5/2UF/cOnHB/4lfIgy7niHgjMsdkiZTbTJeyBXUCrLgi5c
+                  cdSwZ0zTLDvBDduBdUijs8VyC+hIq/F3k7F2pszNGfiLsv7FQEUkY1TrJ5gwCq+R
+                  SeevnGs8dzEI9AqONMjKveQqCxcIosvCLNSBHY4mIhZFySRY2uZAFRb8MieSRpQj
+                  0c76Is+x/BjMH9Xg1dPCw9+wSp4hYF8eiBrBAN3F6NdIYpWZ9K0eww7Hhnkk0H//
+                  X32WI2Rx7gG4DfwxYlU0NiPglg6vNSYjn73DlZUOFGe7XnJdanujucD4THPY/pOa
+                  CEw0wM0SgOnLzy4TJjTvXwce0svEu0xSB9l+kuatBt6GX+VpdV2HuQENBFrQtegB
+                  CADmRMtfohg31FZBvbcEb+eNQVYDZN9wNTKsMAiy1zFBG9wnMqimjB5YXhhHcoIT
+                  uXr3ggj0LB5qPA87fhHfVClpM6VTZMTEPBRPQZkZ5MuIucqqYosBrVI5hPzxwINw
+                  56FjuUA9LPdpjQyPZDf8+v0NvUl21zwN3ewMkhWYhpe24jKqP3MPaK69dcWGHpld
+                  2qRJoV9PqBm2cqQEeOcrj1xFHdS+mxJPJpTaBghDCM0Nc7gf8RgAv3OOg5LKzlYc
+                  qZ5OYCaj7Dzpdc68MXYMFecXk5CLsCyyHkKj7+i6YO33ZAcaf2pXplofbt37Iwe5
+                  QfFWOJe+m8sgF8l6aSjSfX6ZABEBAAGJATYEGAEKACAWIQSMhGe62IWmn31iyyel
+                  hl5/2UF/cAUCWtC16AIbDAAKCRClhl5/2UF/cGvqCACB70YJFOPNxXS5dlu1V46I
+                  l8+w/ruIb0PFN6g4KWMalzz2pnzqqbrrqlBgnxnz+k1kS22euhZ3Ym3aR2AUOXMi
+                  RgHRDoEhzI43C5D3zNUxaL9lN4WltK9KAhFNvEEip/L78gS035yCxkzWc9z3fBQv
+                  Xc6LM5nzW7sJYaCxY6F2tOFbpOYiR6kedcogFBGfNRksUkz6tjPCYnVIq2NnLD6S
+                  qMzpcUarzlPLmWwuvlyuPEFWfCtRaAv+mjXQWsJQDqPZwGTx3722KNA6Yb22AGMG
+                  3b3TsZO7PUAcIIeijAOBUyk/vwyXFA4/yLsl84IOcZGQKaEEBcMf5kHVfAPOxI6L
+                  =nJVE
+                  -----END PGP PUBLIC KEY BLOCK-----
+            volumeMounts:
+              - mountPath: /etc/service-account-key.json
+                name: backups-gcloud-auth-file
+                subPath: backups-samdrive-be.privkey.json
+          volumes:
+            - name: backups-gcloud-auth-file
+              secret:
+                secretName: backups-gcloud-auth-file
