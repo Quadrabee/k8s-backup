@@ -6,23 +6,29 @@ Simple docker image to facilitate backup creation, encryption & upload.
 
 | Env var                   | default             | possible values | description |
 |---------------------------| --------------------| ----------------| ----------------------|
-| BACKUP_COMPRESS           | true                |                 | compress backup files |
-| BACKUP_COMPRESS_FORMAT    | gz                  |    gz, bz2, zip | compression format |
-| BACKUP_ENCRYPT            | false               |                 | encrypt the backup files |
-| BACKUP_ENCRYPT_KEY        |                     |                 | valid pgp public key |
-| BACKUP_ENCRYPT_RECIPIENT  |                     |                 | email address associated with the public key |
-| BACKUP_DB                 | false               |                 | export and backup a database |
-| BACKUP_DB_DRIVER          |                     | mysql, postgres | database engine |
-| BACKUP_DB_HOST            |                     |                 | db hostname |
-| BACKUP_DB_USER            |                     |                 | db user |
-| BACKUP_DB_PASSWORD        |                     |                 | db password |
-| BACKUP_DB_DATABASE        |                     |                 | db name |
-| BACKUP_DATE_FORMAT        | +%Y-%m-%d-%H:%M:%S" |   `date` format | format to use for dates |
-| BACKUP_PREFIX             | {{DATE}}-"          |                 | prefix to use for backup files |
-| BACKUP_UPLOAD             | false               |                 | upload the backups somewhere |
-| BACKUP_UPLOAD_METHOD      |                     |              gs | type of destination |
-| BACKUP_UPLOAD_GS_KEY_FILE |                     |                 | path to gcloud key | |
-| BACKUP_UPLOAD_GS_PATH     |                     |                 | destination path (gs://bucket/subfolder/)
+| BACKUP_COMPRESS                    | true                |                 | compress backup files |
+| BACKUP_COMPRESS_FORMAT             | gz                  |    gz, bz2, zip | compression format |
+| BACKUP_ENCRYPT                     | false               |                 | encrypt the backup files |
+| BACKUP_ENCRYPT_KEY                 |                     |                 | valid pgp public key |
+| BACKUP_ENCRYPT_RECIPIENT           |                     |                 | email address associated with the public key |
+| BACKUP_DB                          | false               |                 | export and backup a database |
+| BACKUP_DB_DRIVER                   |                     | mysql, postgres | database engine |
+| BACKUP_DB_HOST                     |                     |                 | db hostname |
+| BACKUP_DB_USER                     |                     |                 | db user |
+| BACKUP_DB_PASSWORD                 |                     |                 | db password |
+| BACKUP_DB_DATABASE                 |                     |                 | db name |
+| BACKUP_DB_EXTRA_ARGS               |                     |                 | extra args to provide to pg_dump/mysqldump |
+| BACKUP_DATE_FORMAT                 | +%Y-%m-%d-%H:%M:%S" |   `date` format | format to use for dates |
+| BACKUP_PREFIX                      | {{DATE}}-"          |                 | prefix to use for backup files |
+| BACKUP_UPLOAD                      | false               |                 | upload the backups somewhere |
+| BACKUP_UPLOAD_METHOD               |                     |          gs, s3 | type of destination |
+| BACKUP_UPLOAD_GS_KEY_FILE          |                     |                 | path to gcloud key | |
+| BACKUP_UPLOAD_GS_PATH              |                     |                 | destination path (gs://bucket/subfolder/) |
+| BACKUP_UPLOAD_S3_SECRET_ACCESS_KEY |                     |                 | secret key for S3 |
+| BACKUP_UPLOAD_S3_ACCESS_KEY_ID     |                     |                 | access key for S3 |
+| BACKUP_UPLOAD_S3_REGION            |                     |                 | AWS region for S3 |
+| BACKUP_UPLOAD_S3_PATH              |                     |                 | S3 path to store the backup into |
+
 
 ## Examples
 

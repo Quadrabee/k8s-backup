@@ -34,7 +34,8 @@ backup_postgres(){
   export PGPASSWORD="$BACKUP_DB_PASSWORD"
   pg_dump -U "$BACKUP_DB_USER" \
     -h "$BACKUP_DB_HOST" \
-    -d "$BACKUP_DB_DATABASE" > /tmp/db-backup.sql
+    -d "$BACKUP_DB_DATABASE" \
+    "$BACKUP_DB_EXTRA_ARGS" > /tmp/db-backup.sql
 
   handle_backup_file /tmp/db-backup.sql
 }
@@ -45,6 +46,7 @@ backup_mysql(){
   mysqldump -u "$BACKUP_DB_USER" \
     --password="$BACKUP_DB_PASSWORD" \
     -h "$BACKUP_DB_HOST" \
+    "$BACKUP_DB_EXTRA_ARGS"
     "$BACKUP_DB_DATABASE" > /tmp/db-backup.sql
 
   handle_backup_file /tmp/db-backup.sql

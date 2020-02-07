@@ -24,6 +24,31 @@ upload_backup_googlestorage(){
   gsutil cp $1 $BACKUP_UPLOAD_GS_PATH
 }
 
+upload_backup_S3(){
+  echo "Uploading $1 to S3"
+
+  if [ -z "$BACKUP_UPLOAD_S3_ACCESS_KEY_ID" ]; then
+    die "Missing env var BACKUP_UPLOAD_S3_ACCESS_KEY_ID"
+  fi
+
+  if [ -z "$BACKUP_UPLOAD_S3_SECRET_ACCESS_KEY" ]; then
+    die "Missing env var BACKUP_UPLOAD_S3_SECRET_ACCESS_KEY"
+  fi
+
+  if [ -z "$BACKUP_UPLOAD_S3_REGION" ]; then
+    die "Missing env var BACKUP_UPLOAD_S3_REGION"
+  fi
+
+  if [ -z "$BACKUP_UPLOAD_S3_PATH" ]; then
+    die "Missing env var BACKUP_UPLOAD_S3_PATH"
+  fi
+
+  export AWS_SECRET_ACCESS_KEY=$BACKUP_UPLOAD_S3_SECRET_ACCESS_KEY
+  export AWS_ACCESS_KEY_ID=$BACKUP_UPLOAD_S3_ACCESS_KEY_ID
+  export AWS_DEFAULT_REGION=$BACKUP_UPLOAD_S3_REGION
+  aws s3 cp $1 $BACKUP_UPLOAD_S3_PATH
+}
+
 upload_backup(){
   echo "Uploading backup file $1"
 
@@ -34,6 +59,8 @@ upload_backup(){
   if [ "$BACKUP_UPLOAD_METHOD" = "googlestorage" ] ||
      [ "$BACKUP_UPLOAD_METHOD" = "gs" ]; then
      upload_backup_googlestorage $1
+  elif [ "$BACKUP_UPLOAD_METHOD" = "s3" ]; then
+     upload_backup_S3 $1
   else
     die "Unknown BACKUP_UPLOAD_METHOD: $BACKUP_UPLOAD_METHOD"
   fi
