@@ -16,7 +16,7 @@ check_encrypt(){
     die "BACKUP_ENCRYPT_KEY missing"
   fi
   printf -- "$BACKUP_ENCRYPT_KEY" > /tmp/key.pub
-  gpg --import /tmp/key.pub
+  gpg --import /tmp/key.pub || true # TODO: @llambeau why is this failling but (actually) working (apparently)
 }
 
 # Encrypt a file
