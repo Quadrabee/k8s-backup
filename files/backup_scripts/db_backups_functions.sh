@@ -46,7 +46,7 @@ backup_mysql(){
   mysqldump -u "$BACKUP_DB_USER" \
     --password="$BACKUP_DB_PASSWORD" \
     -h "$BACKUP_DB_HOST" \
-    "$BACKUP_DB_EXTRA_ARGS" \
+    $BACKUP_DB_EXTRA_ARGS \
     "$BACKUP_DB_DATABASE" > /tmp/db-backup.sql
 
   handle_backup_file /tmp/db-backup.sql

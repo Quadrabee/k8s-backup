@@ -49,16 +49,19 @@ handle_backup_file () {
   mv $1 $BACKUP_FILE
 
   if [ "$BACKUP_COMPRESS" = "true" ]; then
+    echo "Compressing backup file $BACKUP_FILE"
     compress $BACKUP_FILE
     BACKUP_FILE="$BACKUP_FILE.$BACKUP_COMPRESS_FORMAT"
   fi
 
   if [ "$BACKUP_ENCRYPT" = "true" ]; then
+    echo "Encrypting backup file $BACKUP_FILE"
     encrypt $BACKUP_FILE
     BACKUP_FILE="$BACKUP_FILE.gpg"
   fi
 
   if [ "$BACKUP_UPLOAD" = "true" ]; then
+    echo "Uploading backup file $BACKUP_FILE"
     upload_backup $BACKUP_FILE
   fi
 }
