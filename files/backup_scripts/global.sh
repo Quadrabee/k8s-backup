@@ -15,7 +15,7 @@ check_encrypt(){
   if [ "$BACKUP_ENCRYPT" = "true" -a -z "$BACKUP_ENCRYPT_KEY" ]; then
     die "BACKUP_ENCRYPT_KEY missing"
   fi
-  printf "$BACKUP_ENCRYPT_KEY" > /tmp/key.pub
+  printf -- "$BACKUP_ENCRYPT_KEY" > /tmp/key.pub
   gpg --import /tmp/key.pub
 }
 
