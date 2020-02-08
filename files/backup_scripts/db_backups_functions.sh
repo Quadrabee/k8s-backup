@@ -35,7 +35,7 @@ backup_postgres(){
   pg_dump -U "$BACKUP_DB_USER" \
     -h "$BACKUP_DB_HOST" \
     -d "$BACKUP_DB_DATABASE" \
-    "$BACKUP_DB_EXTRA_ARGS" > /tmp/db-backup.sql
+    $BACKUP_DB_EXTRA_ARGS > /tmp/db-backup.sql
 
   handle_backup_file /tmp/db-backup.sql
 }
