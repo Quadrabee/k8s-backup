@@ -1,7 +1,9 @@
-default: build push
+DOCKER_TAG := $(or ${DOCKER_TAG},${DOCKER_TAG},latest)
 
-build:
-	docker build -t quadrabee/k8s-backup .
+default: image push
 
-push:
-	docker push quadrabee/k8s-backup
+image:
+	docker build -t quadrabee/k8s-backup:${DOCKER_TAG} .
+
+image.push:
+	docker push quadrabee/k8s-backup:${DOCKER_TAG}
