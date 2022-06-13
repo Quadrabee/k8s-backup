@@ -10,7 +10,6 @@ on:
 jobs:
 
   release-image:
-    needs: tests
     runs-on: ubuntu-latest
 
     steps:
