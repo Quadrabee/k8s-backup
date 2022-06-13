@@ -1,0 +1,18 @@
+name: Release images.
+
+on:
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - id: build-image
+        name: Build image
+        run: make image
