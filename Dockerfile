@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.15
 
 RUN apk update \
     && apk add --update \
@@ -10,7 +10,7 @@ RUN apk update \
         bzip2 \
         curl \
         bash \
-        python \
+        python3 \
         py-pip \
         groff \
         less \
