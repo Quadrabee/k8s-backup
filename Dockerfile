@@ -11,7 +11,7 @@ RUN apk update \
         curl \
         bash \
         python3 \
-        py-pip \
+        py3-pip \
         groff \
         less \
         mailcap \
