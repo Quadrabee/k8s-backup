@@ -22,7 +22,7 @@ RUN apk update \
   && curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 
 RUN pip install python-dateutil
-RUN pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic && \
+RUN pip install --upgrade awscli==1.25.19 s3cmd==2.2.0 python-magic && \
     apk -v --purge del py-pip && \
     rm -rf /var/cache/apk/*
 
