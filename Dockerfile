@@ -48,7 +48,8 @@ ENV PATH="$PATH:/root/google-cloud-sdk/bin/" \
     BACKUP_UPLOAD_S3_SECRET_ACCESS_KEY="" \
     BACKUP_UPLOAD_S3_ACCESS_KEY_ID=""\
     BACKUP_UPLOAD_S3_REGION=""\
-    BACKUP_UPLOAD_S3_PATH=""
+    BACKUP_UPLOAD_S3_PATH=""\
+    BACKUP_UPLOAD_S3_ENDPOINT=""
 
 COPY files/init.sh /usr/sbin/
 COPY files/backup_scripts /usr/sbin/backup_scripts
