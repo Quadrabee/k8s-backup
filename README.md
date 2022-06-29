@@ -28,7 +28,7 @@ Simple docker image to facilitate backup creation, encryption & upload.
 | BACKUP_UPLOAD_S3_ACCESS_KEY_ID     |                     |                 | access key for S3 |
 | BACKUP_UPLOAD_S3_REGION            |                     |                 | AWS region for S3 |
 | BACKUP_UPLOAD_S3_PATH              |                     |                 | S3 path to store the backup into |
-
+| BACKUP_UPLOAD_S3_ENDPOINT          | ""                  |                 | S3 endpoint, __ONLY__ for not AWS |
 
 ## Examples
 
@@ -36,6 +36,6 @@ See the [example folder](https://github.com/Quadrabee/k8s-backup/tree/master/exa
 
 ## Tasks
 
-- add support for s3, ftp, sftp
+- add support for ftp, sftp
 - add support for prometheus metrics publication
 - add support for simple files/folders backup
