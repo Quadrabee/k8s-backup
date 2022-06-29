@@ -46,7 +46,12 @@ upload_backup_S3(){
   export AWS_SECRET_ACCESS_KEY=$BACKUP_UPLOAD_S3_SECRET_ACCESS_KEY
   export AWS_ACCESS_KEY_ID=$BACKUP_UPLOAD_S3_ACCESS_KEY_ID
   export AWS_DEFAULT_REGION=$BACKUP_UPLOAD_S3_REGION
+  
+  if [ -z "$BACKUP_UPLOAD_S3_ENDPOINT" ]; then
   aws s3 cp $1 $BACKUP_UPLOAD_S3_PATH
+  else
+  aws --endpoint-url $BACKUP_UPLOAD_S3_ENDPOINT s3 cp $1 $BACKUP_UPLOAD_S3_PATH
+  fi
 }
 
 upload_backup(){
