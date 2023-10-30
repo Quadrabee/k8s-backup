@@ -4,6 +4,7 @@ RUN apk update \
     && apk add --update \
         postgresql-client \
         mysql-client \
+        redis \
         gnupg \
         vim \
         zip \

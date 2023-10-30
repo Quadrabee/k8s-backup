@@ -24,12 +24,15 @@ backup_db(){
     backup_postgres
   elif [ "$BACKUP_DB_DRIVER" == "mysql" ]; then
     backup_mysql
+  elif [ "$BACKUP_DB_DRIVER" == "redis" ]; then
+    backup_redis
   else
     die "BACKUP_DB_DRIVER not set"
   fi
 }
 
 backup_postgres(){
+  echo "Backuping postgres: $BACKUP_DB_USER@$BACKUP_DB_HOST/$BACKUP_DB_DATABASE"
   check_db_params
   export PGPASSWORD="$BACKUP_DB_PASSWORD"
   pg_dump -U "$BACKUP_DB_USER" \
@@ -50,4 +53,14 @@ backup_mysql(){
     "$BACKUP_DB_DATABASE" > /tmp/db-backup.sql
 
   handle_backup_file /tmp/db-backup.sql
+}
+
+backup_redis(){
+  echo "Backuping redis: $BACKUP_DB_HOST"
+  redis-cli \
+    -h "$BACKUP_DB_HOST" \
+    $BACKUP_DB_EXTRA_ARGS \
+    --rdb /tmp/redis.rdb
+
+  handle_backup_file /tmp/redis.rdb
 }
