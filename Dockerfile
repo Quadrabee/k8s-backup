@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:3.21
 
 RUN apk update \
     && apk add --update \
@@ -17,13 +17,13 @@ RUN apk update \
         mailcap \
         py-setuptools \
         git \
+        s3cmd \
+        aws-cli \
         ca-certificates \
   && rm -rf /var/cache/apk/* \
   && curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 
-RUN pip install python-dateutil
-RUN pip install --upgrade awscli==1.25.19 s3cmd==2.2.0 python-magic && \
-    apk -v --purge del py-pip && \
+RUN apk -v --purge del py-pip && \
     rm -rf /var/cache/apk/*
 
 ENV PATH="$PATH:/root/google-cloud-sdk/bin/" \
