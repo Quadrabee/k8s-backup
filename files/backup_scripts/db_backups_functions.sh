@@ -24,6 +24,8 @@ backup_db(){
     backup_postgres
   elif [ "$BACKUP_DB_DRIVER" == "mysql" ]; then
     backup_mysql
+  elif [ "$BACKUP_DB_DRIVER" == "mariadb" ]; then
+    backup_mariadb
   else
     die "BACKUP_DB_DRIVER not set"
   fi
@@ -44,6 +46,18 @@ backup_mysql(){
   echo "Backuping mysql: $BACKUP_DB_USER@$BACKUP_DB_HOST/$BACKUP_DB_DATABASE"
   check_db_params
   mysqldump -u "$BACKUP_DB_USER" \
+    --password="$BACKUP_DB_PASSWORD" \
+    -h "$BACKUP_DB_HOST" \
+    $BACKUP_DB_EXTRA_ARGS \
+    "$BACKUP_DB_DATABASE" > /tmp/db-backup.sql
+
+  handle_backup_file /tmp/db-backup.sql
+}
+
+backup_mariadb(){
+  echo "Backuping mariadb: $BACKUP_DB_USER@$BACKUP_DB_HOST/$BACKUP_DB_DATABASE"
+  check_db_params
+  mariadb-dump -u "$BACKUP_DB_USER" \
     --password="$BACKUP_DB_PASSWORD" \
     -h "$BACKUP_DB_HOST" \
     $BACKUP_DB_EXTRA_ARGS \
