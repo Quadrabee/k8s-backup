@@ -20,6 +20,7 @@ RUN apk update \
         s3cmd \
         aws-cli \
         ca-certificates \
+        mariadb-connector-c-dev \
   && rm -rf /var/cache/apk/* \
   && curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 
